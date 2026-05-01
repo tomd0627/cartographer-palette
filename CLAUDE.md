@@ -47,11 +47,13 @@ assets/
 ## CSS conventions
 
 - Properties alphabetised within each rule (enforced by `stylelint-order`).
-- Logical properties throughout: `margin-block`, `margin-inline`, `padding-block`, `padding-inline`, `inset-block-start`, etc.
-- Physical directional properties (`top`, `left`, etc.) are banned by Stylelint except where a logical equivalent doesn't exist in the target browsers.
+- Logical properties throughout: `margin-block`, `margin-inline`, `padding-block`, `padding-inline`, `inset-block-start`, etc. This is a code convention — there is no Stylelint plugin enforcing it (no logical-properties plugin in deps).
+- Physical directional properties (`top`, `left`, etc.) avoided by convention; not tooling-banned.
 - `--space-*` tokens follow an 8-point scale.
+- Media queries use CSS Level 4 range notation: `@media (width >= 900px)` not `@media (min-width: 900px)`.
 - Reset vendor prefixes are suppressed with `/* stylelint-disable property-no-vendor-prefix */`.
 - `[hidden] { display: none !important }` is in reset.css (with stylelint-disable comment) to ensure the UA-stylesheet rule isn't overridden by component `display` values (e.g. `display: flex` on `.map-state`).
+- Selector naming follows BEM (enforced by `selector-class-pattern` in Stylelint).
 
 ## JS conventions
 
@@ -73,9 +75,10 @@ assets/
 ## Seed system
 
 - 8-character hex string (e.g. `a3f7b2c1`).
-- Encoded in URL hash as `#seed=a3f7b2c1` via `history.replaceState` (no page reload).
+- Encoded in URL hash as `#seed=a3f7b2c1`. `setSeedInURL(seed, push?)` uses `replaceState` by default; generate button and Enter key pass `push=true` so back/forward navigation works between generated maps.
 - `parseSeed(raw)` strips non-hex chars and pads/truncates to 8 chars.
 - `isValidSeed(str)` tests `/^[0-9a-f]{8}$/i`.
+- Inline `<p id="seed-error">` shows/hides via `updateSeedValidity()` in main.js; also clears after every generate so a stale error doesn't persist.
 
 ## Netlify
 
@@ -83,13 +86,21 @@ assets/
 - HTML files served with `max-age=0, must-revalidate` (Netlify invalidates on deploy, but CSS/JS have no content hashing).
 - `_redirects` is intentionally minimal — hash routing requires no server-side redirect rules.
 
-## Pre-commit tooling (Phase 5)
+## Pre-commit tooling
 
-Husky + lint-staged enforcing:
-- CSS property alphabetisation + logical properties (Stylelint)
-- JS linting (ESLint: no-unused-vars, no-console, eqeqeq)
-- Formatting (Prettier: HTML, CSS, JS)
-- No trailing whitespace, LF line endings, trailing newline (editorconfig / prettier)
+Husky + lint-staged wired and verified. Configs:
+
+| File | Tool | Enforces |
+|---|---|---|
+| `eslint.config.js` | ESLint 9 (flat config) | `no-console`, `no-unused-vars`, `eqeqeq` |
+| `.stylelintrc.json` | Stylelint | Alphabetical properties, BEM selectors, standard config |
+| `.prettierrc` | Prettier | LF, 100-char width, single quotes, trailing commas |
+| `.editorconfig` | EditorConfig | LF, trailing newline, no trailing whitespace |
+| `.gitattributes` | Git | `* text=auto eol=lf` — overrides Windows `autocrlf` |
+
+- `package.json` has `"type": "module"` (required for ESLint 9 flat config to parse as ESM without warning).
+- `rule-empty-line-before` is disabled in Stylelint — Prettier owns blank-line formatting.
+- Logical properties are a code convention only; no Stylelint plugin installed for them.
 
 ## Lighthouse targets
 
