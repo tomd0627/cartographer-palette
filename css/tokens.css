@@ -1,0 +1,79 @@
+:root {
+  /* ── Palette ─────────────────────────────────────── */
+  --color-desk: #1c0f08;
+  --color-frame: #4a2c1a;
+  --color-parchment: #f2e3b6;
+  --color-parchment-dark: #e0cc96;
+  --color-parchment-shadow: #c8b07c;
+  --color-ink: #1e110a;
+  --color-ink-mid: #6b4332;
+  --color-ink-light: #b8936a;
+  --color-red: #b8391a;
+  --color-gold: #c4882a;
+  --color-gold-light: #e8c96a;
+
+  /* ── Terrain ─────────────────────────────────────── */
+  --color-ocean-deep: #1d3d5c;
+  --color-ocean-shallow: #2e6288;
+  --color-coast: #c9b87a;
+  --color-lowland: #7a9e55;
+  --color-highland: #8b6e3a;
+  --color-mountain: #b0a090;
+  --color-snow: #e8dfd0;
+
+  /* ── Typography ──────────────────────────────────── */
+  --font-display: 'IM Fell English', 'Palatino Linotype', serif;
+  --font-body: 'Lora', 'Georgia', serif;
+  --font-mono: 'Courier Prime', 'Courier New', monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+
+  /* ── Spacing (8-point scale) ─────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ── Border radius ───────────────────────────────── */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* ── Shadows ─────────────────────────────────────── */
+  --shadow-sm: 0 1px 3px rgb(30 17 10 / 20%);
+  --shadow-md: 0 4px 12px rgb(30 17 10 / 25%), 0 1px 3px rgb(30 17 10 / 15%);
+  --shadow-lg: 0 8px 32px rgb(30 17 10 / 35%), 0 2px 8px rgb(30 17 10 / 20%);
+  --shadow-inset: inset 0 2px 6px rgb(30 17 10 / 20%);
+
+  /* ── Transitions ─────────────────────────────────── */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+
+  /* ── Layout ──────────────────────────────────────── */
+  --content-max: 1200px;
+  --canvas-max: 820px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

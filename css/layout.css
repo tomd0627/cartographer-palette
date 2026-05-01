@@ -1,0 +1,187 @@
+.page-wrapper {
+  background-color: var(--color-desk);
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgb(60 30 15 / 60%) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgb(40 20 10 / 50%) 0%, transparent 55%);
+  color: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-body);
+  min-block-size: 100vh;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+
+.site-header {
+  padding-block: var(--space-8) var(--space-6);
+  padding-inline: var(--space-6);
+  text-align: center;
+}
+
+.site-title {
+  color: var(--color-parchment);
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-2xl), 5vw, var(--text-4xl));
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgb(0 0 0 / 60%);
+}
+
+.site-subtitle {
+  color: var(--color-ink-light);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  letter-spacing: 0.12em;
+  margin-block-start: var(--space-2);
+  text-transform: uppercase;
+}
+
+/* ── Main workbench area ─────────────────────────────── */
+
+.main-content {
+  flex: 1;
+  padding-block: var(--space-4) var(--space-12);
+  padding-inline: var(--space-4);
+}
+
+.workbench {
+  display: grid;
+  gap: var(--space-6);
+  margin-inline: auto;
+  max-inline-size: var(--content-max);
+}
+
+@media (width >= 900px) {
+  .workbench {
+    align-items: start;
+    grid-template-columns: 1fr 260px;
+  }
+}
+
+/* ── Map frame ───────────────────────────────────────── */
+
+.map-frame {
+  background-color: var(--color-parchment);
+  border: 3px solid var(--color-frame);
+  border-radius: var(--radius-sm);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 0 0 6px var(--color-parchment),
+    inset 0 0 0 7px var(--color-ink-light);
+  overflow: hidden;
+  position: relative;
+}
+
+.map-frame canvas {
+  aspect-ratio: 16 / 11;
+  block-size: auto;
+  display: block;
+  inline-size: 100%;
+}
+
+/* ── Map states (loading / error) ────────────────────── */
+
+.map-state {
+  align-items: center;
+  background-color: var(--color-parchment);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+}
+
+.map-state p {
+  color: var(--color-ink-mid);
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.map-state--error p {
+  color: var(--color-red);
+}
+
+/* ── How It Works section ────────────────────────────── */
+
+.how-it-works {
+  background-color: var(--color-parchment);
+  border-block-start: 4px double var(--color-frame);
+  padding-block: var(--space-12) var(--space-16);
+  padding-inline: var(--space-6);
+}
+
+.how-it-works__inner {
+  margin-inline: auto;
+  max-inline-size: var(--content-max);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-style: italic;
+  font-weight: 400;
+  margin-block-end: var(--space-8);
+  position: relative;
+  text-align: center;
+}
+
+.section-title::after {
+  background-color: var(--color-gold);
+  block-size: 1px;
+  content: '';
+  display: block;
+  inline-size: 6rem;
+  margin-block-start: var(--space-3);
+  margin-inline: auto;
+  opacity: 0.6;
+}
+
+.algorithm-steps {
+  display: grid;
+  gap: var(--space-8);
+}
+
+@media (width >= 640px) {
+  .algorithm-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width >= 960px) {
+  .algorithm-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.algorithm-step {
+  border-inline-start: 2px solid var(--color-gold);
+  padding-inline-start: var(--space-4);
+}
+
+.algorithm-step__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-style: italic;
+  font-weight: 400;
+  margin-block-end: var(--space-2);
+}
+
+.algorithm-step p {
+  color: var(--color-ink-mid);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+
+.site-footer {
+  border-block-start: 1px solid rgb(255 255 255 / 8%);
+  color: var(--color-ink-light);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  padding-block: var(--space-4);
+  padding-inline: var(--space-6);
+  text-align: center;
+  text-transform: uppercase;
+}
