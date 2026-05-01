@@ -4,6 +4,8 @@ A procedural fantasy map generator that runs entirely in the browser. Each gener
 
 Built as a portfolio piece demonstrating generative algorithms, Canvas 2D mastery, and considered visual design — with zero runtime dependencies.
 
+**[Source on GitHub](https://github.com/tomd0627/cartographer-palette)**
+
 ---
 
 ## Features
@@ -78,7 +80,7 @@ The 8-character hex seed string is hashed to a 32-bit unsigned integer using **F
 
 ### Stage 2 — Height field via Fractional Brownian Motion
 
-A 512×352 grid of height values is produced by sampling **Simplex noise** at six octaves. This technique — called **Fractional Brownian Motion (FBM)** — layers noise passes at doubling frequencies with halving amplitudes:
+An 800×550 grid of height values is produced by sampling **Simplex noise** at six octaves. This technique — called **Fractional Brownian Motion (FBM)** — layers noise passes at doubling frequencies with halving amplitudes:
 
 | Octave | Contribution | Detail |
 |---|---|---|
@@ -120,12 +122,12 @@ A subtle brightness shift `(1 + (v − 0.5) × 0.15)` is applied within each tie
 ### Stage 5 — Rendering pipeline
 
 1. **Pixel buffer** — terrain RGB values are written directly to a `Uint8ClampedArray` (one byte per channel), the most efficient path to the canvas.
-2. **Box blur** — a 3×3 averaging kernel runs twice over the buffer. This softens terrain boundaries to produce organic-looking coastlines without any path tracing or vector operations.
-3. **OffscreenCanvas compositing** — the blurred buffer is drawn to an `OffscreenCanvas` at grid resolution, then scaled up to 800×550 with bilinear interpolation via `drawImage`.
+2. **Box blur** — a 3×3 averaging kernel runs once over the buffer. This softens terrain boundaries to produce organic-looking coastlines without any path tracing or vector operations.
+3. **OffscreenCanvas compositing** — the blurred buffer is drawn to an `OffscreenCanvas` at the 800×550 grid resolution, then composited onto the canvas via `drawImage`.
 4. **Vignette** — a radial gradient dims the map's edges to give depth and draw the eye toward the centre.
 5. **Cartographic overlay** — a double-rule border, compass rose, and parchment highlight are drawn directly using `ctx.beginPath / arc / fillRect` calls. No image assets.
 
-Total generation time: < 100 ms on a mid-range device at the standard 512×352 grid.
+Total generation time: < 100 ms on a mid-range device at the standard 800×550 grid.
 
 ---
 
