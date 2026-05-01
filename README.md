@@ -4,8 +4,6 @@ A procedural fantasy map generator that runs entirely in the browser. Each gener
 
 Built as a portfolio piece demonstrating generative algorithms, Canvas 2D mastery, and considered visual design — with zero runtime dependencies.
 
-**[Source on GitHub](https://github.com/tomd0627/cartographer-palette)**
-
 ---
 
 ## Features
@@ -44,6 +42,7 @@ Then open `http://localhost:8080` in your browser.
 Deployed to Netlify. Push to the connected branch; Netlify picks up `netlify.toml` automatically.
 
 The `netlify.toml` configures:
+
 - Long-lived cache headers (`max-age=31536000, immutable`) for `/css/*`, `/js/*`, `/assets/*`
 - `must-revalidate` for HTML
 - Security headers: `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`
@@ -60,11 +59,11 @@ npm install
 
 This also installs the Husky pre-commit hook. The hook runs lint-staged on every commit:
 
-| Files | Checks |
-|---|---|
-| `*.js` | ESLint (no-console, no-unused-vars, eqeqeq) → Prettier |
-| `*.css` | Stylelint (alphabetical order, logical properties, no vendor prefixes) → Prettier |
-| `*.html` | Prettier |
+| Files    | Checks                                                                            |
+| -------- | --------------------------------------------------------------------------------- |
+| `*.js`   | ESLint (no-console, no-unused-vars, eqeqeq) → Prettier                            |
+| `*.css`  | Stylelint (alphabetical order, logical properties, no vendor prefixes) → Prettier |
+| `*.html` | Prettier                                                                          |
 
 ---
 
@@ -82,14 +81,14 @@ The 8-character hex seed string is hashed to a 32-bit unsigned integer using **F
 
 An 800×550 grid of height values is produced by sampling **Simplex noise** at six octaves. This technique — called **Fractional Brownian Motion (FBM)** — layers noise passes at doubling frequencies with halving amplitudes:
 
-| Octave | Contribution | Detail |
-|---|---|---|
-| 1 | 50% | Continental shape, large plateaus |
-| 2 | 25% | Regional variation, broad ridges |
-| 3 | 12.5% | Hills and valleys |
-| 4 | 6.25% | Terrain roughness |
-| 5 | 3.125% | Fine surface texture |
-| 6 | 1.5625% | Micro-detail |
+| Octave | Contribution | Detail                            |
+| ------ | ------------ | --------------------------------- |
+| 1      | 50%          | Continental shape, large plateaus |
+| 2      | 25%          | Regional variation, broad ridges  |
+| 3      | 12.5%        | Hills and valleys                 |
+| 4      | 6.25%        | Terrain roughness                 |
+| 5      | 3.125%       | Fine surface texture              |
+| 6      | 1.5625%      | Micro-detail                      |
 
 The Simplex noise implementation uses a **seeded permutation table** — the PRNG performs a Fisher-Yates shuffle of integers 0–255, which determines the noise's spatial character. Each noise call's frequency and phase offset varies by seed, so the continental shapes differ between seeds at the macro level, not just in detail.
 
@@ -107,15 +106,15 @@ The `maskRadius` parameter (0.42–0.54) is seeded by the PRNG, so different see
 
 Each height value `v ∈ [0, 1]` is mapped to a terrain tier:
 
-| Range | Tier | Hex colour |
-|---|---|---|
-| < 0.10 | Deep ocean | `#1d3d5c` |
-| 0.10–0.30 | Shallow ocean | `#2e6288` |
-| 0.30–0.42 | Coastline | `#c9b87a` |
-| 0.42–0.62 | Lowland | `#7a9e55` |
-| 0.62–0.78 | Highland | `#8b6e3a` |
-| 0.78–0.91 | Mountain | `#b0a090` |
-| ≥ 0.91 | Snow peaks | `#e8dfd0` |
+| Range     | Tier          | Hex colour |
+| --------- | ------------- | ---------- |
+| < 0.10    | Deep ocean    | `#1d3d5c`  |
+| 0.10–0.30 | Shallow ocean | `#2e6288`  |
+| 0.30–0.42 | Coastline     | `#c9b87a`  |
+| 0.42–0.62 | Lowland       | `#7a9e55`  |
+| 0.62–0.78 | Highland      | `#8b6e3a`  |
+| 0.78–0.91 | Mountain      | `#b0a090`  |
+| ≥ 0.91    | Snow peaks    | `#e8dfd0`  |
 
 A subtle brightness shift `(1 + (v − 0.5) × 0.15)` is applied within each tier to add dimensionality — mountains lighten as they rise toward snow, ocean deepens toward the centre.
 
@@ -134,6 +133,7 @@ Total generation time: < 100 ms on a mid-range device at the standard 800×550 g
 ## Browser support
 
 Last 2 major versions of Chrome, Firefox, Safari, Edge. Requires:
+
 - ES modules (`type="module"`)
 - `OffscreenCanvas`
 - `navigator.clipboard` (graceful fallback: text selection)
