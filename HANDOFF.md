@@ -6,44 +6,46 @@
 
 ## Current phase
 
-**Phase 5 complete — Pre-commit tooling wired and verified**
+**Phase 6 complete — Recruiter audit, Lighthouse, README finalized**
 
 ---
 
 ## What was just completed
 
-Phase 5 set up all pre-commit tooling. Notable decisions and gotchas:
+Phase 6 ran Lighthouse, fixed an accessibility contrast issue, corrected stale README values, and added GitHub source links.
 
-1. **ESLint 9 flat config** — uses `eslint.config.js`, not `.eslintrc`. Requires `"type": "module"` in `package.json` to avoid a performance warning about the config file parsing as CJS.
+1. **Lighthouse scores (all targets exceeded)**
+   - Performance: 99, Accessibility: 100, Best Practices: 100, SEO: 100
+   - Targets were ≥90 / ≥95 / ≥95 / ≥90
 
-2. **Stylelint BEM pattern** — `stylelint-config-standard` defaults to strict kebab-case selectors, which rejects BEM names like `.btn--generate`. Overridden with a regex that permits `block__element--modifier` structure.
+2. **Accessibility fix** — `.hint` text color changed from `--color-ink-light` (#b8936a) to `--color-ink-mid` (#6b4332). The old value was 2.2:1 contrast on parchment background; new value is 5.9:1 (WCAG AA requires 4.5:1 for small text).
 
-3. **`rule-empty-line-before` disabled** — config-standard requires blank lines before every CSS rule. This conflicts with the tightly grouped legend swatch rules. Disabled since Prettier owns blank-line formatting.
+3. **README stale values fixed** — Two instances of "512×352 grid" corrected to "800×550". Box blur description changed from "runs twice" to "runs once". OffscreenCanvas description updated to reflect 1:1 canvas-to-grid ratio.
 
-4. **Logical properties not tooling-enforced** — no Stylelint plugin for logical properties is in the deps. It remains a code convention only; CLAUDE.md updated to reflect this.
+4. **GitHub source link** — Added to footer (`index.html`) and top of `README.md`. URL: `https://github.com/tomd0627/cartographer-palette`
 
-5. **`.gitattributes` added** — Windows `core.autocrlf=true` was converting LF→CRLF on checkout, which would corrupt Prettier-formatted files. `* text=auto eol=lf` in `.gitattributes` overrides this.
-
-6. **Stylelint `--fix` EPERM on Windows** — lint-staged's Stylelint fix step works correctly (it writes directly); the bare `npx stylelint --fix` command fails with a rename permission error in this environment. Not a blocking issue.
-
-7. **Media queries** — all three `@media (min-width: ...)` calls updated to CSS Level 4 range notation `(width >= N)` to satisfy `stylelint-config-standard`'s `media-feature-range-notation` rule.
+5. **`.gitignore`** — Added `lighthouse-*.json` and `lighthouse-*.html` patterns.
 
 ---
 
 ## Exact next task
 
-**Phase 6: Recruiter audit + Lighthouse + finalize README**
+**Deploy and add live demo link**
 
-1. **Lighthouse** — run against the local server (port changes each run; check with `npx serve`). Targets: Performance ≥90, Accessibility ≥95, Best Practices ≥95, SEO ≥90. Fix anything below target.
-2. **Recruiter audit** — review the page as a hiring manager would: does the "How It Works" section sell the algorithm clearly? Is the canvas impressive on first load? Is the copy tight?
-3. **README** — write a portfolio-quality README: project summary, live demo link, algorithm explanation, stack rationale, and instructions for local dev (`npx serve .`).
-4. **Commit** and confirm Netlify deploy succeeds (check build log or site URL).
+1. `git push origin master` to trigger Netlify deploy.
+2. Once deployed, copy the Netlify site URL (e.g. `https://cartographer-palette.netlify.app`).
+3. Add it to `README.md` — edit the `**[Source on GitHub](...)**` line to also include a live demo link, e.g.:
+   ```
+   **[Live demo →](https://your-site.netlify.app)** · **[Source on GitHub](https://github.com/tomd0627/cartographer-palette)**
+   ```
+4. Commit and push.
 
 ---
 
-## Decisions made this session not yet reflected in CLAUDE.md
+## Decisions made this session
 
-All decisions from this session are now captured in CLAUDE.md.
+- `.hint` color changed to `--color-ink-mid` for WCAG compliance.
+- Footer links styled via `.site-footer__link` in `layout.css`.
 
 ---
 
@@ -53,7 +55,7 @@ All decisions from this session are now captured in CLAUDE.md.
 - `OffscreenCanvas` is used in `renderer.js`. Confirmed working in Chrome/Brave. Test in Safari ≥ 16.4 before final deploy.
 - The compass rose font (`Courier Prime`) is drawn on canvas via `ctx.font`. Renders correctly only after `document.fonts.ready` resolves, which `main.js` awaits before calling `renderPlaceholder`.
 - Auto-generates on every fresh page load (not just shared links) — this is intentional; visitors always see a map immediately.
-- `npx serve` picks a random available port each run — check the terminal output for the actual URL.
+- Live demo URL not yet in README — add after first Netlify deploy.
 
 ---
 
@@ -66,4 +68,5 @@ All decisions from this session are now captured in CLAUDE.md.
 | 3 | Generation algorithm verification | ✅ Complete |
 | 4 | UI controls, seed system, PNG export — verify all work | ✅ Complete |
 | 5 | Pre-commit tooling (Husky, ESLint, Stylelint, Prettier) | ✅ Complete |
-| 6 | Recruiter audit + Lighthouse + finalize README | Next |
+| 6 | Recruiter audit + Lighthouse + finalize README | ✅ Complete |
+| — | Push to Netlify + add live demo URL to README | Next |
